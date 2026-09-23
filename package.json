@@ -1,13 +1,20 @@
 {
-  "name": "olimpic-novo",
+  "name": "autiversi",
   "version": "1.0.0",
-  "description": "Protótipo inicial do Respira: plataforma mobile-first de apoio sensorial e social.",
-  "main": "index.js",
+  "description": "Autiversi - plataforma mobile-first para apoio sensorial, emocional e social.",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "python -m http.server 8000",
+    "test": "echo \"No automated tests yet\""
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "accessibility",
+    "sensory",
+    "wellbeing",
+    "static-site",
+    "healthcare"
+  ],
+  "author": "Autiversi",
   "license": "ISC",
   "dependencies": {
     "jsdom": "^30.0.1"
