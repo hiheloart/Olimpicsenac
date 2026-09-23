@@ -1,0 +1,15 @@
+{
+  "name": "olimpic-novo",
+  "version": "1.0.0",
+  "description": "Protótipo inicial do Respira: plataforma mobile-first de apoio sensorial e social.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsdom": "^30.0.1"
+  }
+}

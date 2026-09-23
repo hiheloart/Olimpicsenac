@@ -1,0 +1,600 @@
+cd "c:\olimpic novo"<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#B9DDF2" />
+  <meta name="description" content="Autiversi — apoio ao bem-estar, rotina, conforto sensorial e situações sociais." />
+  <title>Autiversi — Um jeito mais tranquilo de viver o dia a dia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="home">
+
+  <!-- =========================================================
+       BIBLIOTECA DE ÍCONES SVG AUTIVERSI
+       Estilo: minimalista, arredondado, suave.
+       Uso: <svg class="i i-home"><use href="#i-home"/></svg>
+       ========================================================= -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+
+      <!-- Home -->
+      <symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" d="M12 3.5 3.5 11V20a1.5 1.5 0 0 0 1.5 1.5h4v-5h6v5h4A1.5 1.5 0 0 0 20.5 20V11z"/></symbol>
+
+      <!-- Mapa / Mapa Sensorial -->
+      <symbol id="i-map" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2zm0 0v14m6-12v14"/></symbol>
+
+      <!-- Folha / Desacelerar / Acolhimento -->
+      <symbol id="i-leaf" viewBox="0 0 24 24"><path fill="currentColor" d="M17 3C11 3 5 6.5 5 13c0 4 2.5 6.5 6.5 6.5h.3c2.1-1.6 3.4-4.4 3.7-7.4.4-3.2-1-6.5-2.2-9.1zm-3.7 15.2c-.6 2.2-2.6 2.9-4.2 1.7"/></symbol>
+
+      <!-- Calendário / Rotina -->
+      <symbol id="i-calendar" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M8 3v3M16 3v3M4 9h16M6.5 4h11A1.5 1.5 0 0 1 19 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 18.5v-13A1.5 1.5 0 0 1 6.5 4zM8 13h3M13 13h3M8 17h3"/></symbol>
+
+      <!-- Perfil / Usuário -->
+      <symbol id="i-user" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-7.5 8a7.5 7.5 0 0 1 15 0"/></symbol>
+
+      <!-- Pin / Localização -->
+      <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.4" fill="currentColor"/></symbol>
+
+      <!-- Ondas / Som / Sons tranquilos -->
+      <symbol id="i-waves" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M3 12h2.2c.7 0 1.3.4 1.6 1 .3.6.9 1 1.6 1s1.3-.4 1.6-1c.3-.6.9-1 1.6-1s1.3.4 1.6 1c.3.6.9 1 1.6 1s1.3-.4 1.6-1c.3-.6.9-1 1.6-1H21"/></symbol>
+
+      <!-- Pessoas / Situações sociais -->
+      <symbol id="i-people" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M9 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7 1a2.6 2.6 0 1 0 0-5.2 2.6 2.6 0 0 0 0 5.2zM1.8 19.5c1-2.9 4-4.8 7.2-4.8s6.2 1.9 7.2 4.8m.2-4.8c1.2 0 2.3.4 3.2 1.2"/></symbol>
+
+      <!-- Balão / Conversa / Tradutor -->
+      <symbol id="i-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M20.5 6.5A2.5 2.5 0 0 0 18 4H6a2.5 2.5 0 0 0-2.5 2.5v7A2.5 2.5 0 0 0 6 16h5l3 3v-3h4a2.5 2.5 0 0 0 2.5-2.5z"/></symbol>
+
+      <!-- Caderno / Diário -->
+      <symbol id="i-book" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M5.5 4h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-10a1.5 1.5 0 0 1-1.5-1.5V5.5A1.5 1.5 0 0 1 5.5 4zM8 8h5M8 12h5"/></symbol>
+
+      <!-- Radar / Recomendações -->
+      <symbol id="i-radar" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 22a10 10 0 1 1 10-10 10 10 0 0 1-10 10zm0-17v5l4.5 3"/></symbol>
+
+      <!-- Favoritos / Coração / Salvos -->
+      <symbol id="i-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 20s-7-4.6-7-10a4.2 4.2 0 0 1 7-3 4.2 4.2 0 0 1 7 3c0 5.4-7 10-7 10z"/></symbol>
+
+      <!-- Configurações -->
+      <symbol id="i-config" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM19.4 15l1.6 1-1.7 3-1.8-.8a7.4 7.4 0 0 1-2.4 1.4l-.3 1.9H9.2L9 19.6a7.4 7.4 0 0 1-2.4-1.4L4.7 19 3 16l1.6-1a7.4 7.4 0 0 1 0-3L3 11l1.7-3L6.6 9a7.4 7.4 0 0 1 2.4-1.4l.3-1.9h5.4l.3 1.9a7.4 7.4 0 0 1 2.4 1.4l1.9-.9 1.7 3-1.6 1a7.4 7.4 0 0 1 0 3z"/></symbol>
+
+      <!-- Cadeado / Privacidade -->
+      <symbol id="i-lock" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M6.5 10V7.5a5.5 5.5 0 0 1 11 0V10m-12 0h13a1.5 1.5 0 0 1 1.5 1.5v7A1.5 1.5 0 0 1 18.5 20h-13A1.5 1.5 0 0 1 4 18.5v-7A1.5 1.5 0 0 1 5.5 10zM12 15v2"/></symbol>
+
+      <!-- Mãos / Cuidado / Acolher / Guiar -->
+      <symbol id="i-hands" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 22a5 5 0 0 1-4.5-3 6 6 0 0 1-1.5-4v-3a1.5 1.5 0 0 1 3 0V10a1 1 0 0 1 2 0v-1a1.5 1.5 0 0 1 3 0v1a1 1 0 0 1 2 0v1a1 1 0 0 0 2 0V9a1.5 1.5 0 0 1 3 0v6a5 5 0 0 1-9 4v-2z"/></symbol>
+
+      <!-- Alerta / Crise (tranquilo, sem cor avermelhada) -->
+      <symbol id="i-calm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="currentColor" d="M12 7.5a1 1 0 0 0-1 1V13a1 1 0 1 0 2 0V8.5a1 1 0 0 0-1-1zm0 9.5a1.2 1.2 0 1 0 0-2.4 1.2 1.2 0 0 0 0 2.4z"/></symbol>
+
+      <!-- Seta / Voltar -->
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 5 8 12l7 7"/></symbol>
+
+      <!-- Seta direita -->
+      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></symbol>
+
+      <!-- Sol / Tema claro -->
+      <symbol id="i-sun" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 17.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM12 3v2M12 19v2M3 12h2M19 12h2M5.5 5.5l1.5 1.5M17 17l1.5 1.5M5.5 18.5 7 17M17 7l1.5-1.5"/></symbol>
+
+      <!-- Lua / Tema escuro -->
+      <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></symbol>
+
+      <!-- Acessibilidade -->
+      <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="4" r="1.8" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 8h16M10 8l1.5 5 1-5 1 5 1.5-5M9.5 12l-1.5 8m7-8 1.5 8"/></symbol>
+
+      <!-- Check -->
+      <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5 10 17l9-11"/></symbol>
+
+      <!-- Play / Executar / Praticar -->
+      <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5v14l11-7z"/></symbol>
+
+      <!-- Foto / Imagem -->
+      <symbol id="i-photo" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="10.5" r="1.8" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="m4 17.5 4.5-4.5 3.5 3 2.5-2 5.5 5.5"/></symbol>
+
+      <!-- Editar / Escrever -->
+      <symbol id="i-write" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 20h4l11-11-4-4L4 16zM14 6l4 4"/></symbol>
+
+      <!-- Árvore / natureza -->
+      <symbol id="i-tree" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 22v-5M8 11h.01M16 11h.01M9 17h6l-3-3z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 3a5.5 5.5 0 0 0-4.5 8.5c1 1 2.3 1.6 3.5 1.7 0-1 .9-1.7 1-1.7.1 0 1 .7 1 1.7 1.2-.1 2.5-.7 3.5-1.7A5.5 5.5 0 0 0 12 3z"/></symbol>
+
+      <!-- Sol / brilho leve para conforto -->
+      <symbol id="i-comfort" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 13a7 7 0 0 1 14 0M3 17h18"/></symbol>
+
+      <!-- Caixa / Checklist / Preparar -->
+      <symbol id="i-checklist" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 6h16v14H4z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 11h16M8 15l2 2 4-4"/></symbol>
+
+      <!-- Lupa / Pesquisar -->
+      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="m20 20-3.5-3.5"/></symbol>
+
+      <!-- Mala / Sair / Viagem -->
+      <symbol id="i-bag" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M6 9h12v11a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 20zm3-3a3 3 0 0 1 6 0M9 13v2M15 13v2"/></symbol>
+
+      <!-- Sino / Lembrete -->
+      <symbol id="i-bell" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 3a6 6 0 0 0-6 6v3.5L4.5 15h15L18 12.5V9a6 6 0 0 0-6-6zM10 20h4M9.5 20a2.5 2.5 0 0 0 5 0"/></symbol>
+
+      <!-- Respiração / Círculo -->
+      <symbol id="i-breath" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+
+      <!-- Olho / Foco visual -->
+      <symbol id="i-eye" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
+
+      <!-- Simbolo do Autismo - Infinito colorido (autismo) — mantido no sprite por compatibilidade, mas NÃO usado no header -->
+      <symbol id="i-autism" viewBox="0 0 48 24">
+        <path fill="none" stroke="#E63946" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" d="M12 12c0-4 3-7 7-7s7 3 7 7-3 7-7 7c-2 0-3-1-5-3s-5-5-9-5c-3 0-5 2.5-5 5.5S5 19 8.5 19c3 0 5-2 7-4"/>
+        <path fill="none" stroke="#F4A261" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" d="M10 15c0 3 2.5 5 5.5 5s5.5-2 5.5-5"/>
+        <path fill="none" stroke="#2A9D8F" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" d="M30 7c-2 0-3.5 1.5-5 3.5-2.5 3-3.5 4.5-6 4.5-2 0-3.5-1.5-3.5-3.5"/>
+        <circle cx="39" cy="7" r="1.8" fill="#264653"/>
+        <circle cx="5" cy="16.5" r="1.8" fill="#E76F51"/>
+      </symbol>
+
+      <!-- Laço azul do Autismo (SÍMBOLO OFICIAL NO HEADER) — awareness ribbon azul #4A90E2 com leve gradiente azul→lilás -->
+      <symbol id="i-autism-ribbon" viewBox="0 0 48 48">
+        <defs>
+          <linearGradient id="ribbon-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#4A90E2"/>
+            <stop offset="60%" stop-color="#7EB8D8"/>
+            <stop offset="100%" stop-color="#C7B1EC"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#ribbon-grad)" stroke="#3A7BC8" stroke-width="1" stroke-linejoin="round"
+              d="M24 3 C16 3 10 9 10 17 C10 22 12 26 15.5 29 L11 42 L20.5 36.5 L24 38.5 L27.5 36.5 L37 42 L32.5 29 C36 26 38 22 38 17 C38 9 32 3 24 3 Z
+                 M20 18 C20 15 21.5 14 24 14 C26.5 14 28 15 28 18 C28 21 25.5 23 24 25 C22.5 23 20 21 20 18 Z"/>
+      </symbol>
+
+      <!-- Robô / IA -->
+      <symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="9" cy="12" r="1.4" fill="currentColor"/><circle cx="15" cy="12" r="1.4" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 2v3M9 16h6M8 22v-2M16 22v-2M2 14h3M19 14h3"/></symbol>
+
+      <!-- Criança / Brinquedo -->
+      <symbol id="i-kid" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M7 13h10l-2 8H9zM4 10h3M17 10h3M9 4l1.5 2M15 4L13.5 6"/></symbol>
+
+      <!-- Livro infantil / Desenho -->
+      <symbol id="i-draw" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 5h9a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3zM13 8h4a2 2 0 0 1 2 2v9h-6zM7 13h5M7 16h3"/></symbol>
+
+      <!-- Telefone / Apoio -->
+      <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M6 4h3l2 5-2 1.5a11 11 0 0 0 5 5L15 13l5 2v3a2 2 0 0 1-2 2A16 16 0 0 1 4 6a2 2 0 0 1 2-2z"/></symbol>
+
+      <!-- Filtro -->
+      <symbol id="i-filter" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 5h16l-6 8v5l-4-2v-3z"/></symbol>
+
+      <!-- ============================================================
+           DESENHOS INFANTIS SVG (reais, não emoji) — para Modo Criança
+           Uso: <svg><use href="#d-sol"/></svg>
+           ============================================================ -->
+      <symbol id="d-sol" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="28" fill="#FFD24A" stroke="#F2A93B" stroke-width="3"/>
+        <g stroke="#FFD24A" stroke-width="5" stroke-linecap="round">
+          <line x1="60" y1="12" x2="60" y2="24"/>
+          <line x1="60" y1="96" x2="60" y2="108"/>
+          <line x1="12" y1="60" x2="24" y2="60"/>
+          <line x1="96" y1="60" x2="108" y2="60"/>
+          <line x1="25" y1="25" x2="33" y2="33"/>
+          <line x1="87" y1="87" x2="95" y2="95"/>
+          <line x1="25" y1="95" x2="33" y2="87"/>
+          <line x1="87" y1="33" x2="95" y2="25"/>
+        </g>
+        <circle cx="50" cy="55" r="3" fill="#5A3E1A"/>
+        <circle cx="70" cy="55" r="3" fill="#5A3E1A"/>
+        <path d="M48 68 Q60 78 72 68" fill="none" stroke="#E76F51" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="40" cy="65" r="4" fill="#FFB0D6" opacity="0.6"/>
+        <circle cx="80" cy="65" r="4" fill="#FFB0D6" opacity="0.6"/>
+      </symbol>
+
+      <symbol id="d-nuvem" viewBox="0 0 120 120">
+        <path d="M30 80 Q20 80 18 68 Q12 58 22 52 Q24 40 38 40 Q46 28 60 32 Q72 26 82 38 Q100 38 100 56 Q108 64 100 74 Q96 82 86 80 Z"
+          fill="#FFFFFF" stroke="#B7DDFF" stroke-width="3"/>
+        <circle cx="42" cy="60" r="2.5" fill="#7EB8D8"/>
+        <circle cx="62" cy="58" r="2.5" fill="#7EB8D8"/>
+        <path d="M42 70 Q52 78 62 70" fill="none" stroke="#7EB8D8" stroke-width="2.5" stroke-linecap="round"/>
+      </symbol>
+
+      <symbol id="d-coelho" viewBox="0 0 120 120">
+        <ellipse cx="42" cy="28" rx="10" ry="22" fill="#F5E6D3" stroke="#D6B8A0" stroke-width="2.5"/>
+        <ellipse cx="60" cy="28" rx="10" ry="22" fill="#F5E6D3" stroke="#D6B8A0" stroke-width="2.5"/>
+        <ellipse cx="42" cy="30" rx="5" ry="14" fill="#FFB0D6" opacity="0.5"/>
+        <ellipse cx="60" cy="30" rx="5" ry="14" fill="#FFB0D6" opacity="0.5"/>
+        <ellipse cx="50" cy="72" rx="32" ry="30" fill="#FFFFFF" stroke="#D6B8A0" stroke-width="2.5"/>
+        <circle cx="40" cy="66" r="3.5" fill="#5A3E1A"/>
+        <circle cx="62" cy="66" r="3.5" fill="#5A3E1A"/>
+        <circle cx="39" cy="65" r="1.2" fill="#FFFFFF"/>
+        <circle cx="61" cy="65" r="1.2" fill="#FFFFFF"/>
+        <ellipse cx="50" cy="78" rx="4" ry="3" fill="#FFB0D6"/>
+        <path d="M46 82 Q50 86 54 82" fill="none" stroke="#C9A286" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="76" r="5" fill="#FFB0D6" opacity="0.5"/>
+        <circle cx="70" cy="76" r="5" fill="#FFB0D6" opacity="0.5"/>
+        <ellipse cx="50" cy="100" rx="10" ry="4" fill="#FFFFFF" stroke="#D6B8A0" stroke-width="2"/>
+      </symbol>
+
+      <symbol id="d-tartaruga" viewBox="0 0 120 120">
+        <ellipse cx="60" cy="72" rx="40" ry="28" fill="#94D46E" stroke="#5B9C41" stroke-width="2.5"/>
+        <path d="M60 44 Q30 44 22 72 Q20 94 60 98 Q100 94 98 72 Q90 44 60 44 Z"
+          fill="#7AB859" stroke="#5B9C41" stroke-width="2.5"/>
+        <path d="M60 48 L55 60 L65 60 Z M42 58 L48 64 L38 68 Z M78 58 L72 64 L82 68 Z M44 82 L50 78 L52 86 Z M76 82 L70 78 L68 86 Z M60 84 L56 94 L64 94 Z"
+          fill="#F1FAE4" stroke="#5B9C41" stroke-width="1.8"/>
+        <ellipse cx="96" cy="70" rx="10" ry="8" fill="#CDEAB3" stroke="#5B9C41" stroke-width="2"/>
+        <circle cx="100" cy="67" r="2.2" fill="#2F6A20"/>
+        <path d="M100 72 Q104 72 106 70" fill="none" stroke="#2F6A20" stroke-width="1.8" stroke-linecap="round"/>
+        <ellipse cx="22" cy="80" rx="6" ry="5" fill="#CDEAB3" stroke="#5B9C41" stroke-width="2"/>
+        <ellipse cx="96" cy="90" rx="6" ry="5" fill="#CDEAB3" stroke="#5B9C41" stroke-width="2"/>
+        <ellipse cx="36" cy="96" rx="5" ry="4" fill="#CDEAB3" stroke="#5B9C41" stroke-width="2"/>
+        <ellipse cx="84" cy="96" rx="5" ry="4" fill="#CDEAB3" stroke="#5B9C41" stroke-width="2"/>
+      </symbol>
+
+      <symbol id="d-peixe" viewBox="0 0 120 120">
+        <ellipse cx="52" cy="60" rx="34" ry="24" fill="#65B8FF" stroke="#2F8AE0" stroke-width="2.5"/>
+        <path d="M86 60 L110 38 L106 60 L110 82 Z" fill="#8DCBFF" stroke="#2F8AE0" stroke-width="2.5"/>
+        <circle cx="38" cy="54" r="5" fill="#FFFFFF" stroke="#2F8AE0" stroke-width="1.8"/>
+        <circle cx="38" cy="54" r="2.8" fill="#1F4F80"/>
+        <circle cx="37" cy="53" r="1" fill="#FFFFFF"/>
+        <path d="M22 62 Q26 68 32 66" fill="none" stroke="#1F4F80" stroke-width="2" stroke-linecap="round"/>
+        <path d="M42 42 Q56 44 66 54 Q70 60 64 70 Q56 78 42 76 Q34 72 34 62 Q36 46 42 42 Z"
+          fill="#B7DDFF" stroke="#2F8AE0" stroke-width="1.5"/>
+        <circle cx="56" cy="58" r="2" fill="#FFD24A"/>
+        <circle cx="64" cy="66" r="2" fill="#FF9A6C"/>
+        <path d="M102 52 L94 56 M102 68 L94 64" stroke="#2F8AE0" stroke-width="1.5" stroke-linecap="round"/>
+      </symbol>
+
+      <symbol id="d-arvore" viewBox="0 0 120 120">
+        <rect x="52" y="78" width="16" height="34" rx="3" fill="#C68A4B" stroke="#8E5E2E" stroke-width="2.5"/>
+        <circle cx="60" cy="52" r="36" fill="#94D46E" stroke="#5B9C41" stroke-width="2.5"/>
+        <circle cx="36" cy="52" r="20" fill="#B1E28F" stroke="#5B9C41" stroke-width="2.5"/>
+        <circle cx="84" cy="52" r="20" fill="#B1E28F" stroke="#5B9C41" stroke-width="2.5"/>
+        <circle cx="60" cy="30" r="18" fill="#CDEAB3" stroke="#5B9C41" stroke-width="2.5"/>
+        <circle cx="48" cy="44" r="4" fill="#FF8EC7"/>
+        <circle cx="72" cy="40" r="4" fill="#FFD24A"/>
+        <circle cx="64" cy="62" r="4" fill="#FF9A6C"/>
+        <circle cx="42" cy="62" r="4" fill="#FF8EC7"/>
+        <circle cx="78" cy="64" r="4" fill="#FFD24A"/>
+      </symbol>
+
+      <symbol id="d-casa" viewBox="0 0 120 120">
+        <path d="M22 64 L60 28 L98 64 Z" fill="#FF9A6C" stroke="#C95225" stroke-width="3" stroke-linejoin="round"/>
+        <rect x="34" y="62" width="52" height="46" fill="#FFFFFF" stroke="#C95225" stroke-width="3"/>
+        <rect x="52" y="80" width="16" height="28" fill="#FFC68B" stroke="#C95225" stroke-width="2.5"/>
+        <circle cx="65" cy="94" r="1.6" fill="#C95225"/>
+        <rect x="40" y="72" width="10" height="10" fill="#B7DDFF" stroke="#C95225" stroke-width="2"/>
+        <line x1="45" y1="72" x2="45" y2="82" stroke="#C95225" stroke-width="1.5"/>
+        <line x1="40" y1="77" x2="50" y2="77" stroke="#C95225" stroke-width="1.5"/>
+        <rect x="70" y="72" width="10" height="10" fill="#B7DDFF" stroke="#C95225" stroke-width="2"/>
+        <line x1="75" y1="72" x2="75" y2="82" stroke="#C95225" stroke-width="1.5"/>
+        <line x1="70" y1="77" x2="80" y2="77" stroke="#C95225" stroke-width="1.5"/>
+        <rect x="68" y="30" width="8" height="14" fill="#FFFFFF" stroke="#C95225" stroke-width="2.5"/>
+        <path d="M70 30 Q70 22 76 24 M74 30 Q74 22 80 26" stroke="#D9D9D9" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <circle cx="44" cy="104" r="3" fill="#94D46E"/>
+        <circle cx="50" cy="106" r="3" fill="#94D46E"/>
+        <circle cx="76" cy="104" r="3" fill="#94D46E"/>
+        <circle cx="82" cy="106" r="3" fill="#94D46E"/>
+      </symbol>
+
+      <symbol id="d-coracao" viewBox="0 0 120 120">
+        <path d="M60 100 Q20 70 20 42 a22 22 0 0 1 40-12 22 22 0 0 1 40 12 c0 28-40 58-40 58Z"
+          fill="#FF8EC7" stroke="#D14E92" stroke-width="3"/>
+        <path d="M38 46 Q44 38 56 42" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.8"/>
+        <circle cx="46" cy="62" r="3" fill="#FFFFFF" opacity="0.4"/>
+      </symbol>
+
+      <symbol id="d-estrela" viewBox="0 0 120 120">
+        <path d="M60 14 L72 44 L104 46 L80 66 L88 98 L60 82 L32 98 L40 66 L16 46 L48 44 Z"
+          fill="#FFD24A" stroke="#F2A93B" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M52 48 Q60 36 68 48" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+        <circle cx="48" cy="64" r="3" fill="#FFFFFF" opacity="0.5"/>
+      </symbol>
+
+      <!-- FORMALHAS E CORES (SVG shapes) para jogos -->
+      <symbol id="s-circulo" viewBox="0 0 100 100"><circle cx="50" cy="50" r="42" fill="#FF8EC7" stroke="#D14E92" stroke-width="3"/></symbol>
+      <symbol id="s-quadrado" viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" rx="8" fill="#65B8FF" stroke="#2F8AE0" stroke-width="3"/></symbol>
+      <symbol id="s-triangulo" viewBox="0 0 100 100"><path d="M50 10 L92 88 L8 88 Z" fill="#94D46E" stroke="#5B9C41" stroke-width="3" stroke-linejoin="round"/></symbol>
+      <symbol id="s-estrela-forma" viewBox="0 0 100 100"><path d="M50 10 L60 40 L92 40 L66 60 L76 90 L50 72 L24 90 L34 60 L8 40 L40 40 Z" fill="#FFD24A" stroke="#F2A93B" stroke-width="3" stroke-linejoin="round"/></symbol>
+      <symbol id="s-coracao-forma" viewBox="0 0 100 100"><path d="M50 88 Q14 58 16 36 a18 18 0 0 1 34-10 18 18 0 0 1 34 10 C86 58 50 88 50 88Z" fill="#FF9A6C" stroke="#C95225" stroke-width="3"/></symbol>
+      <symbol id="s-losango" viewBox="0 0 100 100"><path d="M50 8 L92 50 L50 92 L8 50 Z" fill="#B28BFF" stroke="#7C55D6" stroke-width="3" stroke-linejoin="round"/></symbol>
+      <symbol id="s-hexagono" viewBox="0 0 100 100"><path d="M25 14 H75 L94 50 L75 86 H25 L6 50 Z" fill="#FFD24A" stroke="#F2A93B" stroke-width="3" stroke-linejoin="round"/></symbol>
+      <symbol id="s-oval" viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="42" ry="28" fill="#94D46E" stroke="#5B9C41" stroke-width="3"/></symbol>
+
+      <!-- Cores em formato de coração, círculo etc para jogo -->
+      <symbol id="c-vermelho" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="#E76F51" stroke="#B5471F" stroke-width="3"/></symbol>
+      <symbol id="c-azul" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="#65B8FF" stroke="#2F8AE0" stroke-width="3"/></symbol>
+      <symbol id="c-amarelo" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="#FFD24A" stroke="#F2A93B" stroke-width="3"/></symbol>
+      <symbol id="c-verde" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="#94D46E" stroke="#5B9C41" stroke-width="3"/></symbol>
+      <symbol id="c-lilas" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="#B28BFF" stroke="#7C55D6" stroke-width="3"/></symbol>
+      <symbol id="c-rosa" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="#FF8EC7" stroke="#D14E92" stroke-width="3"/></symbol>
+      <symbol id="c-laranja" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="#FF9A6C" stroke="#C95225" stroke-width="3"/></symbol>
+      <symbol id="c-marron" viewBox="0 0 60 60"><circle cx="30" cy="30" r="24" fill="#C68A4B" stroke="#8E5E2E" stroke-width="3"/></symbol>
+
+    </defs>
+  </svg>
+
+  <!-- Loading -->
+  <div id="loading" class="loading">
+    <div class="loading-content">
+      <div class="loading-logo" aria-hidden="true">
+        <svg viewBox="0 0 80 80" width="80" height="80">
+          <circle cx="40" cy="40" r="32" fill="#B9DDF2" opacity="0.5" class="loading-ring"/>
+          <circle cx="40" cy="40" r="22" fill="#DCCEF5" opacity="0.7" class="loading-ring2"/>
+          <circle cx="40" cy="40" r="12" fill="#7EB8D8" class="loading-core"/>
+        </svg>
+      </div>
+      <p class="loading-text">Tudo bem. Você não precisa entender tudo de uma vez.</p>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <!-- Header -->
+  <header class="app-header" role="banner">
+    <div class="header-inner">
+      <button class="logo-btn" data-nav="home" aria-label="Ir para o início">
+        <span class="logo-autism" aria-hidden="true">
+          <svg class="i autism-icon ribbon-icon"><use href="#i-autism-ribbon"/></svg>
+        </span>
+        <span class="logo-text">Autiversi</span>
+      </button>
+
+      <nav class="desktop-nav" aria-label="Navegação principal">
+        <button data-nav="home" class="nav-link">Início</button>
+        <button data-nav="mapa" class="nav-link">Mapa Sensorial</button>
+        <button data-nav="desacelerar" class="nav-link">Desacelerar</button>
+        <button data-nav="rotina" class="nav-link">Rotina</button>
+        <button data-nav="cuidadores" class="nav-link">Apoio Familiar</button>
+        <button data-nav="perfil" class="nav-link">Perfil</button>
+      </nav>
+
+      <div class="header-actions">
+        <button id="btn-child-mode" class="btn-ghost kid-btn" aria-label="Modo Criança" title="Modo para crianças autistas">
+          <svg class="i i-kid" aria-hidden="true"><use href="#i-kid"/></svg>
+          <span class="btn-label">Criança</span>
+        </button>
+        <button id="btn-ai-chat" class="btn-ghost ai-btn" aria-label="Conversar com IA" title="Conversar com assistente">
+          <svg class="i i-bot" aria-hidden="true"><use href="#i-bot"/></svg>
+          <span class="btn-label">Conversar</span>
+        </button>
+        <button id="btn-theme" class="btn-ghost icon-btn" aria-label="Alternar tema" title="Alternar tema">
+          <svg class="i i-sun" aria-hidden="true"><use href="#i-sun"/></svg>
+          <svg class="i i-moon icon-theme-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+        </button>
+        <button id="btn-accessibility" class="btn-ghost icon-btn" aria-label="Personalizar experiência" title="Personalizar">
+          <svg class="i i-config" aria-hidden="true"><use href="#i-config"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Painel de Personalização -->
+  <div id="accessibility-panel" class="panel hidden" role="dialog" aria-modal="true" aria-label="Personalize sua experiência">
+    <div class="panel-card">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg class="i i-access" aria-hidden="true"><use href="#i-access"/></svg>
+          <h3>Personalize sua experiência</h3>
+        </div>
+        <button id="close-accessibility" class="btn-ghost icon-btn" aria-label="Fechar">
+          <svg class="i"><use href="#i-check"/></svg>
+        </button>
+      </div>
+      <div class="panel-body">
+
+        <label class="toggle-row">
+          <div class="tr-info">
+            <svg class="i" aria-hidden="true"><use href="#i-breath"/></svg>
+            <div><strong>Reduzir animações</strong><small>Transições mais calmas e sem movimentos.</small></div>
+          </div>
+          <div class="tr-right"><input type="checkbox" id="toggle-motion"/><span class="toggle-slider" aria-hidden="true"></span></div>
+        </label>
+
+        <label class="toggle-row">
+          <div class="tr-info">
+            <svg class="i" aria-hidden="true"><use href="#i-moon"/></svg>
+            <div><strong>Modo escuro</strong><small>Menos luz e contraste mais suave.</small></div>
+          </div>
+          <div class="tr-right"><input type="checkbox" id="toggle-theme"/><span class="toggle-slider" aria-hidden="true"></span></div>
+        </label>
+
+        <label class="toggle-row">
+          <div class="tr-info">
+            <svg class="i" aria-hidden="true"><use href="#i-eye"/></svg>
+            <div><strong>Texto maior</strong><small>Facilita a leitura em telas pequenas.</small></div>
+          </div>
+          <div class="tr-right"><input type="checkbox" id="toggle-large-text"/><span class="toggle-slider" aria-hidden="true"></span></div>
+        </label>
+
+        <label class="toggle-row">
+          <div class="tr-info">
+            <svg class="i" aria-hidden="true"><use href="#i-comfort"/></svg>
+            <div><strong>Alto contraste</strong><small>Melhor visibilidade dos elementos.</small></div>
+          </div>
+          <div class="tr-right"><input type="checkbox" id="toggle-contrast"/><span class="toggle-slider" aria-hidden="true"></span></div>
+        </label>
+
+        <label class="toggle-row">
+          <div class="tr-info">
+            <svg class="i" aria-hidden="true"><use href="#i-waves"/></svg>
+            <div><strong>Sons e músicas</strong><small>Ativar sons ambiente e músicas.</small></div>
+          </div>
+          <div class="tr-right"><input type="checkbox" id="toggle-sound"/><span class="toggle-slider" aria-hidden="true"></span></div>
+        </label>
+
+        <label class="toggle-row">
+          <div class="tr-info">
+            <svg class="i" aria-hidden="true"><use href="#i-kid"/></svg>
+            <div><strong>Modo Criança (global)</strong><small>Textos simples, divertidos e maiores.</small></div>
+          </div>
+          <div class="tr-right"><input type="checkbox" id="toggle-child-global"/><span class="toggle-slider" aria-hidden="true"></span></div>
+        </label>
+
+        <div class="divider-sm"></div>
+        <small class="panel-hint">Todas essas preferências ficam salvas apenas neste navegador.</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <main id="app" class="app-main" role="main"></main>
+
+  <!-- Bottom Nav (mobile) — 6 opções -->
+  <nav class="bottom-nav" aria-label="Navegação móvel">
+    <button data-nav="home" class="bn-item" aria-label="Início">
+      <svg class="i bn-icon" aria-hidden="true"><use href="#i-home"/></svg>
+      <span class="bn-label">Início</span>
+    </button>
+    <button data-nav="mapa" class="bn-item" aria-label="Mapa Sensorial">
+      <svg class="i bn-icon" aria-hidden="true"><use href="#i-map"/></svg>
+      <span class="bn-label">Mapa</span>
+    </button>
+    <button data-nav="desacelerar" class="bn-item bn-calm" aria-label="Desacelerar">
+      <svg class="i bn-icon" aria-hidden="true"><use href="#i-leaf"/></svg>
+      <span class="bn-label">Desacelerar</span>
+    </button>
+    <button data-nav="rotina" class="bn-item" aria-label="Rotina">
+      <svg class="i bn-icon" aria-hidden="true"><use href="#i-calendar"/></svg>
+      <span class="bn-label">Rotina</span>
+    </button>
+    <button data-nav="cuidadores" class="bn-item" aria-label="Apoio Familiar">
+      <svg class="i bn-icon" aria-hidden="true"><use href="#i-hands"/></svg>
+      <span class="bn-label">Apoio</span>
+    </button>
+    <button data-nav="perfil" class="bn-item" aria-label="Perfil">
+      <svg class="i bn-icon" aria-hidden="true"><use href="#i-user"/></svg>
+      <span class="bn-label">Perfil</span>
+    </button>
+  </nav>
+
+  <!-- Painel de Chat com IA -->
+  <div id="ai-chat-panel" class="panel hidden" role="dialog" aria-modal="true" aria-label="Conversar com Assistente">
+    <div class="panel-card chat-card">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg class="i" aria-hidden="true" style="color:var(--lilac-500);"><use href="#i-bot"/></svg>
+          <h3>Ana — Sua Assistente</h3>
+        </div>
+        <button id="close-ai-chat" class="btn-ghost icon-btn" aria-label="Fechar">
+          <svg class="i"><use href="#i-check"/></svg>
+        </button>
+      </div>
+      <div id="ai-chat-body" class="chat-body"></div>
+      <div class="chat-input-row">
+        <div class="chat-quick-btns">
+          <button class="chip chip-sky" data-ai-quick="Estou me sentindo sobrecarregado">😌 Me acalmar</button>
+          <button class="chip chip-lilac" data-ai-quick="Como faço para pedir ajuda?">💬 Pedir ajuda</button>
+          <button class="chip chip-sage" data-ai-quick="Quero dicas para rotina">📅 Rotina</button>
+        </div>
+        <div class="chat-input-wrap">
+          <input id="ai-input" class="input chat-input" placeholder="Escreva aqui... (Enter para enviar)" aria-label="Digite sua mensagem"/>
+          <button id="ai-send" class="btn btn-primary btn-icon" aria-label="Enviar">
+            <svg class="i i-arrow-right" style="transform:rotate(-90deg);"><use href="#i-arrow-right"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Painel Modo Criança -->
+  <div id="child-panel" class="panel hidden" role="dialog" aria-modal="true" aria-label="Modo Criança">
+    <div class="panel-card child-card">
+      <div class="panel-header child-header">
+        <div class="panel-title">
+          <svg class="i" aria-hidden="true" style="color:#FF9A76;"><use href="#i-kid"/></svg>
+          <h3>Espaço Criança</h3>
+        </div>
+        <button id="close-child" class="btn-ghost icon-btn" aria-label="Fechar">
+          <svg class="i"><use href="#i-check"/></svg>
+        </button>
+      </div>
+      <div class="child-body">
+        <p class="child-intro">Bem-vindo(a)! Aqui tem coisas divertidas, calmas e legais para você. 🎨</p>
+        <div class="child-grid">
+          <button class="child-item ci-1" data-child-cat="colorir">
+            <div class="ci-emoji">🎨</div>
+            <strong>Colorir</strong>
+            <small>Desenhos para pintar</small>
+          </button>
+          <button class="child-item ci-2" data-child-cat="puzzle">
+            <div class="ci-emoji">🧩</div>
+            <strong>Quebra-cabeça</strong>
+            <small>Monte peça por peça</small>
+          </button>
+          <button class="child-item ci-3" data-child-cat="livros">
+            <div class="ci-emoji">📚</div>
+            <strong>Histórias</strong>
+            <small>Histórias curtinhas</small>
+          </button>
+          <button class="child-item ci-4" data-child-cat="musicas">
+            <div class="ci-emoji">🎵</div>
+            <strong>Músicas calmas</strong>
+            <small>Sons para relaxar</small>
+          </button>
+          <button class="child-item ci-5" data-child-cat="amigos">
+            <div class="ci-emoji">🐻</div>
+            <strong>Amiguitos</strong>
+            <small>Personagens legais</small>
+          </button>
+          <button class="child-item ci-6" data-child-cat="aprender">
+            <div class="ci-emoji">🌱</div>
+            <strong>Aprender</strong>
+            <small>Descobrir coisas novas</small>
+          </button>
+          <button class="child-item ci-7" data-child-cat="memoria">
+            <div class="ci-emoji">🃏</div>
+            <strong>Jogo da Memória</strong>
+            <small>Ache os pares iguais</small>
+          </button>
+          <button class="child-item ci-8" data-child-cat="formas">
+            <div class="ci-emoji">🔴</div>
+            <strong>Formas e Cores</strong>
+            <small>Nomeie cada cor</small>
+          </button>
+          <button class="child-item ci-9" data-child-cat="pontos">
+            <div class="ci-emoji">🔵</div>
+            <strong>Ligue os Pontos</strong>
+            <small>De 1 até o final</small>
+          </button>
+          <button class="child-item ci-10" data-child-cat="contar">
+            <div class="ci-emoji">✋</div>
+            <strong>Contar Dedinhos</strong>
+            <small>Até chegar em 10</small>
+          </button>
+          <button class="child-item ci-11" data-child-cat="sombras">
+            <div class="ci-emoji">�</div>
+            <strong>Ache a Sombra</strong>
+            <small>Qual combina?</small>
+          </button>
+          <button class="child-item ci-12" data-child-cat="ritmo">
+            <div class="ci-emoji">🥁</div>
+            <strong>Bata o Ritmo</strong>
+            <small>Tum, tum, tum...</small>
+          </button>
+          <button class="child-item ci-13" data-child-cat="intruso">
+            <div class="ci-emoji">🦄</div>
+            <strong>Qual é diferente?</strong>
+            <small>Ache o intruso</small>
+          </button>
+          <button class="child-item ci-14" data-child-cat="social">
+            <div class="ci-emoji">🗣️</div>
+            <strong>Conversar</strong>
+            <small>Como responder?</small>
+          </button>
+          <button class="child-item ci-15" data-child-cat="letras">
+            <div class="ci-emoji">🔤</div>
+            <strong>ABC divertido</strong>
+            <small>Aprender as letras</small>
+          </button>
+          <button class="child-item ci-16" data-child-cat="sentir">
+            <div class="ci-emoji">💗</div>
+            <strong>Meus sentimentos</strong>
+            <small>Nomear emoções</small>
+          </button>
+          <button class="child-item ci-17" data-child-cat="corpo">
+            <div class="ci-emoji">🤸</div>
+            <strong>Movimento legal</strong>
+            <small>Mexer o corpo</small>
+          </button>
+        </div>
+        <div id="child-sub-views"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
