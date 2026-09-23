@@ -88,6 +88,8 @@
     soundEnabled: LS.get('soundEnabled', false),
     profile: LS.get('profile', {
       name: 'Você',
+      age: null,
+      phone: null,
       sensory: {},
       role: null,
       supportLevel: null,
@@ -100,6 +102,10 @@
     diary: LS.get('diary', []),
     checklist: LS.get('checklist', {}),
     savedPlaces: LS.get('savedPlaces', ['p1', 'p3', 'p6']),
+    emergencyContact: LS.get('emergencyContact', {
+      name: 'Contato de emergência',
+      number: '192'
+    }),
     selectedFilter: 'baixo',
     selectedPlace: null,
     quizStep: 0,
@@ -116,6 +122,34 @@
     childMode: LS.get('childMode', false)
   };
 
+  const sanitizePhone = (value = '') => {
+    const digits = String(value || '').replace(/\D/g, '');
+    return digits;
+  };
+
+  const formatPhone = (value = '') => {
+    const digits = sanitizePhone(value);
+    if (!digits) return '—';
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7, 11)}`;
+  };
+
+  const getEmergencyContact = () => {
+    const saved = LS.get('emergencyContact', null);
+    if (saved && typeof saved === 'object') {
+      const personalNumber = sanitizePhone(saved.personalNumber || saved.number || '192') || '192';
+      return {
+        name: String(saved.name || 'Contato de emergência').trim() || 'Contato de emergência',
+        number: personalNumber,
+        personalNumber,
+        defaultNumber: '192'
+      };
+    }
+    return { name: 'Contato de emergência', number: '192', personalNumber: '192', defaultNumber: '192' };
+  };
+
   const saveState = () => {
     LS.set('profile', state.profile);
     LS.set('routine', state.routine);
@@ -124,6 +158,14 @@
     LS.set('savedPlaces', state.savedPlaces);
     LS.set('lastVisited', state.lastVisited.slice(0, 6));
     LS.set('childMode', !!state.childMode);
+    const emergency = state.emergencyContact || getEmergencyContact();
+    const personalNumber = sanitizePhone(emergency.personalNumber || emergency.number || '192') || '192';
+    LS.set('emergencyContact', {
+      name: emergency.name || 'Contato de emergência',
+      number: personalNumber,
+      personalNumber,
+      defaultNumber: '192'
+    });
   };
 
   const pushLastVisited = (page, label) => {
@@ -468,7 +510,12 @@
         const cgSection = cgBtn.getAttribute('data-cg-section');
         state.caregiverSection = cgSection;
         render();
-        window.scrollTo({ top: 0, behavior: state.motion === 'off' ? 'auto' : 'smooth' });
+        const target = document.querySelector('.cg-content[data-cg-panel="' + cgSection + '"]');
+        if (target) {
+          setTimeout(() => target.scrollIntoView({ behavior: state.motion === 'off' ? 'auto' : 'smooth', block: 'start' }), 60);
+        } else {
+          window.scrollTo({ top: 0, behavior: state.motion === 'off' ? 'auto' : 'smooth' });
+        }
         return;
       }
       if (!navBtn) return;
@@ -574,12 +621,50 @@
         break;
       case 'desacelerar': initAcolhimentoInteractions(); break;
     }
+    renderEmergencyFloatingButton();
+    const caregiverTarget = document.querySelector('.cg-content[data-cg-panel="' + state.caregiverSection + '"]');
+    if (state.page === 'cuidadores' && caregiverTarget) {
+      setTimeout(() => caregiverTarget.scrollIntoView({ behavior: state.motion === 'off' ? 'auto' : 'smooth', block: 'start' }), 80);
+    }
     updateKidsText();
   };
 
   // =========================================================
   // 6. COMPONENTES REUTILIZÁVEIS
   // =========================================================
+  const renderEmergencyFloatingButton = () => {
+    const contact = state.emergencyContact || getEmergencyContact();
+    const emergencyNumber = '192';
+    const customNumber = sanitizePhone(contact.personalNumber || contact.number || emergencyNumber) || emergencyNumber;
+    let bar = document.getElementById('emergency-floating-bar');
+    if (!bar) {
+      bar = document.createElement('div');
+      bar.id = 'emergency-floating-bar';
+      document.body.appendChild(bar);
+    }
+    const displayName = (contact.name || 'Contato de emergência').trim() || 'Contato de emergência';
+    const hasCustom = customNumber && customNumber !== emergencyNumber;
+    const buttonsHtml = `
+      <a class="emergency-floating-button emergency-call-main" href="tel:${emergencyNumber}" aria-label="Ligar para 192">
+        <span class="emergency-floating-icon">${ico('i-calm')}</span>
+        <span class="emergency-floating-copy">
+          <strong>1 • Emergência</strong>
+          <small>192 • SAMU</small>
+        </span>
+      </a>
+      ${hasCustom ? `
+        <a class="emergency-floating-button emergency-call-alt" href="tel:${customNumber}" aria-label="Ligar para ${displayName}">
+          <span class="emergency-floating-icon">${ico('i-phone')}</span>
+          <span class="emergency-floating-copy">
+            <strong>2 • ${displayName}</strong>
+            <small>${formatPhone(customNumber)}</small>
+          </span>
+        </a>
+      ` : ''}
+    `;
+    bar.innerHTML = `<div class="emergency-floating-stack">${buttonsHtml}</div>`;
+  };
+
   const pageHead = (title, subtitle, badgeIcon = '', badgeText = '') => h(`
     <div class="page-head fade-in">
       ${badgeText ? `<span class="chip chip-soft mb-3">${badgeIcon ? ico(badgeIcon) + ' ' : ''}${badgeText}</span>` : ''}
@@ -638,10 +723,32 @@
       <section class="hero fade-in">
         <h1>${heroTitle}</h1>
         <p class="hero-sub">${heroSub}</p>
-        <div class="hero-pills" style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
-          <span class="pill blue soft">🎯 No seu ritmo</span>
-          <span class="pill lilac soft">💙 Acessível</span>
-          <span class="pill cream soft">🌱 Sempre aqui</span>
+        <button class="hero-guide-btn" id="open-site-guide" type="button" aria-expanded="false">
+          <span class="hero-guide-icon">${ico('i-book')}</span>
+          Guia rápido do site
+        </button>
+        <div class="hero-guide-panel hidden" id="site-guide-panel" aria-live="polite">
+          <div class="guide-step">
+            <span>1</span>
+            <div>
+              <strong>Comece pela parte que você precisa</strong>
+              <p>Na página inicial, escolha uma opção como “Mapa Sensorial”, “Rotina”, “Perfil” ou “Apoio Familiar”. Assim você entra direto na ferramenta que vai te ajudar naquele momento.</p>
+            </div>
+          </div>
+          <div class="guide-step">
+            <span>2</span>
+            <div>
+              <strong>Use o mapa para achar lugares mais confortáveis</strong>
+              <p>O mapa mostra lugares com diferentes níveis de estímulo. Você pode ver quais são mais tranquilos, mais calmos e mais fáceis de visitar no seu dia a dia.</p>
+            </div>
+          </div>
+          <div class="guide-step">
+            <span>3</span>
+            <div>
+              <strong>Organize o dia e fique mais seguro</strong>
+              <p>Na rotina você pode guardar compromissos e lembretes. No apoio familiar, você pode salvar um contato de emergência e ter o número 192 sempre à mão quando precisar.</p>
+            </div>
+          </div>
         </div>
       </section>
     `);
@@ -684,14 +791,14 @@
           { nav: 'rotina',     icon: 'i-calendar', label: '✅ Minha rotina',      hint: 'Coisas do dia a dia',   cls: 'ht-lilac' },
           { nav: 'perfil',     sub: 'sensorial',   icon: 'i-user',     label: '👦 Meu perfil',      hint: 'Sobre você',           cls: 'ht-cream' },
           { nav: 'perfil',     sub: 'social',      icon: 'i-people',   label: '🗣️ Conversar',        hint: 'Treino de fala',       cls: 'ht-sky' },
-          { nav: 'cuidadores', icon: 'i-hands',    label: '👨‍👩‍👧 Família',        hint: 'Área para adultos',    cls: 'ht-lilac' }
+          { nav: 'cuidadores', icon: 'i-people',    label: '👨‍👩‍👧 Família',        hint: 'Área para adultos',    cls: 'ht-lilac' }
         ]
       : [
           { nav: 'desacelerar',icon: 'i-leaf',     label: 'Preciso de ajuda agora',  hint: 'Espaço de Acolhimento',    cls: 'ht-sage' },
           { nav: 'mapa',       icon: 'i-map',      label: 'Explorar lugares',         hint: 'Mapa Sensorial',           cls: 'ht-sky' },
           { nav: 'rotina',     icon: 'i-calendar', label: 'Organizar minha rotina',   hint: 'Compromissos do dia',      cls: 'ht-lilac' },
           { nav: 'perfil',     sub: 'sensorial',   icon: 'i-user',     label: careeMode ? 'Perfil sensorial da pessoa cuido' : 'Conhecer meu perfil', hint: careeMode ? 'Níveis e dicas' : 'Perfil Sensorial', cls: 'ht-cream' },
-          { nav: 'cuidadores', icon: 'i-hands',    label: 'Apoio Familiar',           hint: 'Dicas e orientações',      cls: careeMode ? 'ht-sage' : 'ht-lilac' },
+          { nav: 'cuidadores', icon: 'i-people',    label: 'Apoio Familiar',           hint: 'Dicas e orientações',      cls: careeMode ? 'ht-sage' : 'ht-lilac' },
           { nav: 'perfil',     sub: 'social',      icon: 'i-people',   label: 'Situações sociais',         hint: 'Treinar e entender',       cls: 'ht-sky' }
         ];
     const tiles = el('section', { class: 'home-tiles fade-in delay-1' });
@@ -774,6 +881,16 @@
       const bw = $('#btn-warm'); if (bw) bw.addEventListener('click', toastWarm);
       const b = $('#open-access-home');
       if (b) b.addEventListener('click', () => $('#accessibility-panel').classList.remove('hidden'));
+
+      const guideBtn = $('#open-site-guide');
+      const guidePanel = $('#site-guide-panel');
+      if (guideBtn && guidePanel) {
+        guideBtn.addEventListener('click', () => {
+          const isOpen = !guidePanel.classList.contains('hidden');
+          guidePanel.classList.toggle('hidden', isOpen);
+          guideBtn.setAttribute('aria-expanded', String(!isOpen));
+        });
+      }
     }, 30);
 
     return root;
@@ -827,7 +944,8 @@
     const mapView = el('div', { class: 'map-view fade-in delay-1' });
     mapView.appendChild(h(`<div class="map-graticule"></div>`));
     const filtered = filteredPlaces();
-    PLACES.forEach(p => {
+    const mapPlaces = filtered.length ? filtered.slice(0, 5) : PLACES.slice(0, 5);
+    mapPlaces.forEach(p => {
       const isShown = filtered.some(x => x.id === p.id);
       const m = el('div', {
         class: 'map-marker' + (state.selectedPlace && state.selectedPlace.id === p.id ? ' selected' : '') + (isShown ? '' : ' dim'),
@@ -897,7 +1015,9 @@
         (p.tagline || '').toLowerCase().includes(q)
       );
     }
-    return list.sort((a,b) => b.comfort - a.comfort);
+    return list
+      .sort((a,b) => b.comfort - a.comfort)
+      .slice(0, 5);
   }
 
   function filteredByStim() { return filteredPlaces(); }
@@ -1844,6 +1964,7 @@
 
     if (!fullySetup || state._editProfile) {
       const setup = el('div', { class: 'profile-setup fade-in delay-1' });
+      const emergency = state.emergencyContact || getEmergencyContact();
       setup.appendChild(h(`
         <h3 class="mb-3">${ico('i-user')} ${fullySetup ? 'Editar seu perfil' : 'Vamos começar'}</h3>
         <p class="muted mb-5">${fullySetup ? 'Atualize seus dados quando quiser.' : 'Isso ajuda a deixar o Autiversi com a sua cara. Pode mudar depois.'}</p>
@@ -1858,6 +1979,22 @@
           <div class="field">
             <label class="label">Idade (opcional)</label>
             <input class="input" id="ps-age" type="number" min="1" max="120" placeholder="Ex: 15" value="${state.profile.age || ''}"/>
+          </div>
+        </div>
+      `));
+
+      setup.appendChild(h(`
+        <div class="card-soft emergency-profile-card mt-4 mb-5">
+          <h4 class="mb-3">${ico('i-phone')} Contato de emergência</h4>
+          <div class="ps-name-inputs">
+            <div class="field">
+              <label class="label">Nome do contato</label>
+              <input class="input" id="ps-emergency-name" type="text" placeholder="Ex: Maria" value="${emergency.name || 'Contato de emergência'}" maxlength="40"/>
+            </div>
+            <div class="field">
+              <label class="label">Telefone do contato</label>
+              <input class="input" id="ps-emergency-phone" type="tel" placeholder="Ex: 11999999999" value="${sanitizePhone(emergency.personalNumber || emergency.number || '192') || '192'}" maxlength="20"/>
+            </div>
           </div>
         </div>
       `));
@@ -1962,9 +2099,48 @@
           }
         }));
 
-        const nIn = $('#ps-name'); if (nIn) nIn.addEventListener('input', e => state.profile.name = e.target.value.trim().slice(0,40));
-        const aIn = $('#ps-age'); if (aIn) aIn.addEventListener('input', e => { const v = parseInt(e.target.value, 10); state.profile.age = (v && v > 0 && v < 121) ? v : null; });
-        const cIn = $('#ps-caree-name'); if (cIn) cIn.addEventListener('input', e => state.profile.careeName = e.target.value.trim().slice(0,40) || null);
+        const nIn = $('#ps-name'); if (nIn) nIn.addEventListener('input', e => {
+          state.profile.name = e.target.value.trim().slice(0,40);
+          saveState();
+        });
+        const aIn = $('#ps-age'); if (aIn) aIn.addEventListener('input', e => {
+          const v = parseInt(e.target.value, 10);
+          state.profile.age = (v && v > 0 && v < 121) ? v : null;
+          saveState();
+        });
+        const pIn = $('#ps-phone'); if (pIn) pIn.addEventListener('input', e => {
+          const digits = sanitizePhone(e.target.value);
+          state.profile.phone = digits || null;
+          saveState();
+        });
+        const emName = $('#ps-emergency-name'); if (emName) emName.addEventListener('input', e => {
+          const name = e.target.value.trim() || 'Contato de emergência';
+          state.emergencyContact = {
+            ...(state.emergencyContact || {}),
+            name,
+            personalNumber: sanitizePhone(state.emergencyContact?.personalNumber || state.emergencyContact?.number || '192') || '192',
+            number: sanitizePhone(state.emergencyContact?.personalNumber || state.emergencyContact?.number || '192') || '192',
+            defaultNumber: '192'
+          };
+          saveState();
+          renderEmergencyFloatingButton();
+        });
+        const emPhone = $('#ps-emergency-phone'); if (emPhone) emPhone.addEventListener('input', e => {
+          const digits = sanitizePhone(e.target.value) || '192';
+          state.emergencyContact = {
+            ...(state.emergencyContact || {}),
+            name: state.emergencyContact?.name || 'Contato de emergência',
+            personalNumber: digits,
+            number: digits,
+            defaultNumber: '192'
+          };
+          saveState();
+          renderEmergencyFloatingButton();
+        });
+        const cIn = $('#ps-caree-name'); if (cIn) cIn.addEventListener('input', e => {
+          state.profile.careeName = e.target.value.trim().slice(0,40) || null;
+          saveState();
+        });
 
         const save = $('#ps-save'); if (save) save.onclick = () => { saveState(); toast('Perfil atualizado!'); state._editProfile = false; render(); };
         const cancel = $('#ps-cancel'); if (cancel) cancel.onclick = () => { state._editProfile = false; render(); };
@@ -1980,6 +2156,7 @@
             <h4>${ico('i-hands')} ${state.profile.name ? 'Olá, ' + state.profile.name + '!' : 'Seu perfil de cuidador(a)'}</h4>
             <div class="ps-row"><span class="ps-label">Você (cuidador)</span><span class="ps-value">${state.profile.name || '—'}</span></div>
             ${state.profile.age ? `<div class="ps-row"><span class="ps-label">Sua idade</span><span class="ps-value">${state.profile.age} anos</span></div>` : ''}
+            <div class="ps-row"><span class="ps-label">Seu contato</span><span class="ps-value">${state.profile.phone ? formatPhone(state.profile.phone) : '—'}</span></div>
             <div class="ps-row"><span class="ps-label">Seu papel</span><span class="ps-badge caregiver-badge">${roleLabel}</span></div>
             <div class="ps-divider"></div>
             <div class="ps-row ps-row-caree">
@@ -2002,6 +2179,7 @@
             <h4>${ico('i-user')} ${state.profile.name ? 'Olá, ' + state.profile.name + '!' : 'Seu perfil'}</h4>
             <div class="ps-row"><span class="ps-label">Nome</span><span class="ps-value">${state.profile.name || '—'}</span></div>
             <div class="ps-row"><span class="ps-label">Idade</span><span class="ps-value">${state.profile.age ? state.profile.age + ' anos' : '—'}</span></div>
+            <div class="ps-row"><span class="ps-label">Contato</span><span class="ps-value">${state.profile.phone ? formatPhone(state.profile.phone) : '—'}</span></div>
             <div class="ps-row"><span class="ps-label">Perfil</span><span class="ps-badge">${roleLabel}</span></div>
             <div class="ps-row"><span class="ps-label">Nível de suporte</span><span class="ps-value">${levelLabel}</span></div>
           </div>
@@ -2024,7 +2202,7 @@
       { sub: 'diario',     icon: 'i-book',     label: 'Diário de bem-estar',hint: 'Registre seus dias',      cls: 'hb-lilac' },
       { sub: 'salvos',     icon: 'i-heart',    label: 'Locais salvos',      hint: 'Seus lugares favoritos',  cls: 'hb-sage' },
       { sub: 'social',     icon: 'i-people',   label: 'Situações Sociais',  hint: 'Treinador e Tradutor',   cls: 'hb-sky' },
-      { sub: 'cuidadores', icon: 'i-hands',    label: 'Apoio Familiar',    hint: 'Dicas e guia de apoio',  cls: 'hb-lilac' },
+      { sub: 'cuidadores', icon: 'i-people',    label: 'Apoio Familiar',    hint: 'Dicas e guia de apoio',  cls: 'hb-lilac' },
       { sub: 'config',     icon: 'i-config',   label: 'Configurações',      hint: 'Personalize tudo',       cls: 'hb-sage' },
       { sub: 'privacidade',icon: 'i-lock',     label: 'Privacidade',        hint: 'Controle seus dados',    cls: 'hb-cream' }
     ];
@@ -2641,7 +2819,7 @@
     const heading = pageHead(
       isSubPage ? 'Para pessoas cuidadoras' : 'Apoio Familiar',
       'Um guia prático, humano e acolhedor para apoiar pessoas autistas.',
-      'i-hands',
+      'i-people',
       'Apoio Familiar'
     );
     root.appendChild(heading);
@@ -2651,8 +2829,8 @@
     const tabs = el('div', { class: 'cg-tabs cg-tabs-nav' });
     CAREGIVER_SECTIONS.forEach((sec, i) => {
       tabs.appendChild(h(`
-        <button class="cg-tab ${state.caregiverSection === sec.id ? 'active' : ''}" data-cg-section="${sec.id}" aria-label="${sec.title}">
-          ${ico(sec.icon)}
+        <button class="cg-tab ${state.caregiverSection === sec.id ? 'active' : ''}" data-cg-section="${sec.id}" data-cg-panel="${sec.id}" aria-label="${sec.title}">
+          ${ico(sec.icon || 'i-user')}
           <div>
             <strong>${sec.title}</strong>
             <small class="muted">${sec.desc.split('.')[0]}.</small>
@@ -2667,7 +2845,7 @@
     if (!isSubPage) {
       rightCol.appendChild(h(`
         <section class="cg-hero card fade-in delay-1">
-          <div class="cg-hero-ico">${ico('i-hands')}</div>
+          <div class="cg-hero-ico">${ico('i-user')}</div>
           <div>
             <h3>Você não está sozinho(a)</h3>
             <p class="muted mb-0">Cuidar de uma pessoa autista é um aprendizado diário. Este espaço reúne dicas práticas, orientações de psicólogos, telefones de apoio e informações úteis para construir um dia a dia mais tranquilo e acolhedor.</p>
@@ -2756,8 +2934,8 @@
       rightCol.appendChild(h(`
         <section class="cg-feature-grid fade-in delay-2 mt-5">
           ${CAREGIVER_SECTIONS.slice(0, 8).map(sec => `
-            <button class="cg-feature-card" data-cg-section="${sec.id}">
-              <span class="cg-feature-ico">${ico(sec.icon)}</span>
+            <button class="cg-feature-card" data-cg-section="${sec.id}" data-cg-panel="${sec.id}">
+              <span class="cg-feature-ico">${ico(sec.icon || 'i-user')}</span>
               <div>
                 <strong>${sec.title}</strong>
                 <small class="muted">${sec.desc.split('.')[0]}.</small>
@@ -2769,10 +2947,10 @@
     }
 
     const current = CAREGIVER_SECTIONS.find(s => s.id === state.caregiverSection) || CAREGIVER_SECTIONS[0];
-    const card = el('div', { class: 'card cg-content fade-in delay-2 mt-5' });
+    const card = el('div', { class: 'card cg-content fade-in delay-2 mt-5', 'data-cg-panel': current.id });
     card.appendChild(h(`
       <div class="mb-4">
-        <span class="chip chip-soft mb-3">${ico(current.icon)} ${current.title}</span>
+        <span class="chip chip-soft mb-3">${ico(current.icon || 'i-user')} ${current.title}</span>
         <p class="muted mb-0">${current.desc}</p>
       </div>
     `));
@@ -2847,6 +3025,7 @@
           }
         });
       }
+
     }, 0);
     return root;
   }
@@ -3061,16 +3240,39 @@
   function getAIAnswer(rawMsg) {
     const msg = normalizeStr(rawMsg);
     if (!msg) return AI_FALLBACK;
+
+    const scored = [];
     for (const entry of AI_RESPONSES) {
-      const hit = (entry.keys || []).some(k => {
+      let score = 0;
+      (entry.keys || []).forEach(k => {
         const nk = normalizeStr(k);
-        return nk && msg.includes(nk);
+        if (!nk) return;
+        if (msg.includes(nk)) score += 5;
+        nk.split(' ').forEach(word => {
+          if (word && msg.includes(word)) score += 1;
+        });
       });
-      if (hit) {
-        const answers = entry.answers || [entry.answer];
-        return pickRand(answers.filter(Boolean)) || AI_FALLBACK;
-      }
+      if (score > 0) scored.push({ entry, score });
     }
+
+    if (scored.length) {
+      const best = scored.sort((a, b) => b.score - a.score)[0];
+      const answers = best.entry.answers || [best.entry.answer];
+      return pickRand(answers.filter(Boolean)) || AI_FALLBACK;
+    }
+
+    const generalPatterns = [
+      { match: /(ajuda|socorro|urgente|me ajuda|como fazer|dica|preciso)/, answer: 'Claro! 😊 Posso te ajudar com isso. Me diga o que está acontecendo: barulho, rotina, escola, conversa, ansiedade, ou um lugar que te deixa desconfortável. Assim eu te sugiro uma resposta mais simples e prática.' },
+      { match: /(ansioso|nervoso|sobrecarregado|crise|estou mal|desesperado)/, answer: 'Parece que você está bem sobrecarregado(a). 💙 Vamos diminuir a intensidade. Tente respirar fundo: inspire 4, segure 4 e expire 6, 3 vezes. Se puder, vá para um lugar mais silencioso e use algo que te acalme.' },
+      { match: /(rotina|organizar|horario|agenda|dia)/, answer: 'Uma rotina clara ajuda bastante a reduzir a ansiedade. 📅 Tente separar o dia em 3 passos: acordar, tarefa principal e pausa. O objetivo não é tudo perfeito; é deixar as coisas mais previsíveis.' },
+      { match: /(barulho|som|alto|ruido|agitado|muito som)/, answer: 'Sons altos costumam ser muito intensos. 🔇 Tente usar fones, ir para um canto mais quieto ou levar algo que te acalma. Pequenas pausas também ajudam bastante.' },
+      { match: /(amizade|social|conversa|falar com alguem|relacionamento)/, answer: 'Conversa social pode ser cansativa, mas dá para treinar com calma. 💬 Comece com uma frase curta, diga algo que você gosta e não precisa responder tudo de uma vez. É válido e você está fazendo o seu melhor.' },
+      { match: /(escola|trabalho|professor|aula)/, answer: 'Na escola ou no trabalho, você pode pedir adaptações simples: silêncio, pausas, explicação escrita ou um lugar mais calmo. 🧩 Pedir ajuda não é fraqueza — é autocuidado.' }
+    ];
+
+    const found = generalPatterns.find(p => p.match.test(msg));
+    if (found) return found.answer;
+
     return AI_FALLBACK;
   }
 
@@ -3547,7 +3749,7 @@
       { id: 'desacelerar', label: 'Espaço de Acolhimento', sub: 'Acalmar e desacelerar', icon: 'i-leaf' },
       { id: 'perfil', subpage: 'sensorial', label: 'Perfil Sensorial', sub: 'Conhecer meu perfil', icon: 'i-user' },
       { id: 'perfil', subpage: 'social', label: 'Situações Sociais', sub: 'Treinar e entender', icon: 'i-people' },
-      { id: 'cuidadores', label: 'Apoio Familiar', sub: 'Dicas para cuidadores', icon: 'i-hands' }
+      { id: 'cuidadores', label: 'Apoio Familiar', sub: 'Dicas para cuidadores', icon: 'i-people' }
     ];
     pageMap.forEach(p => {
       if ((p.label + ' ' + p.sub).toLowerCase().includes(query)) {
