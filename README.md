@@ -61,6 +61,19 @@ Também é possível usar o script do projeto:
 npm start
 ```
 
+## Publicação na Vercel
+
+Para publicar este projeto na Vercel, siga os passos abaixo:
+
+1. Faça login na Vercel.
+2. Clique em "Add New Project".
+3. Importe o repositório do GitHub.
+4. Na tela de configuração, mantenha tudo padrão.
+5. Como o projeto é estático, o Build Command pode ficar vazio e o Output Directory pode ficar em branco.
+6. Clique em "Deploy".
+
+A Vercel vai detectar automaticamente que o projeto é um site estático e publicar a pasta raiz do repositório.
+
 ## Publicação no GitHub Pages
 
 1. Faça o push do projeto para o GitHub.
